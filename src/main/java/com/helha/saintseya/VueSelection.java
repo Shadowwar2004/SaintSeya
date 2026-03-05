@@ -22,7 +22,7 @@ public class VueSelection {
 
         StackPane root = new StackPane();
 
-        // 1. L'IMAGE DE FOND (Toujours la même pour la cohérence)
+
         InputStream is = getClass().getResourceAsStream("/com/helha/saintseya/Menu/Selection.png");
         if (is != null) {
             ImageView fond = new ImageView(new Image(is));
@@ -34,11 +34,11 @@ public class VueSelection {
             root.setStyle(StyleConstantes.FOND);
         }
 
-        // 2. CONTENEUR PRINCIPAL
-        VBox mainBox = new VBox(50); // Espace généreux entre le titre, les persos et le bouton retour
+
+        VBox mainBox = new VBox(50);
         mainBox.setAlignment(Pos.CENTER);
 
-        // 3. LE TITRE DORÉ
+
         Label titre = new Label("CHOISISSEZ VOTRE CHEVALIER");
         titre.setStyle("-fx-text-fill: linear-gradient(to bottom, #FFDF00, #DAA520); -fx-font-size: 42px; -fx-font-weight: bold; -fx-font-family: 'Arial';");
         DropShadow ombreTitre = new DropShadow();
@@ -46,8 +46,8 @@ public class VueSelection {
         ombreTitre.setRadius(15);
         titre.setEffect(ombreTitre);
 
-        // 4. LES CARTES DES CHEVALIERS
-        HBox conteneurPions = new HBox(30); // Plus d'espace entre les cartes
+
+        HBox conteneurPions = new HBox(30);
         conteneurPions.setAlignment(Pos.CENTER);
 
         String[][] chevaliers = {
@@ -63,7 +63,7 @@ public class VueSelection {
 
             Button pion = new Button(nom);
 
-            // Nouveau style "Carte de Chevalier"
+
             String stylePionNormal = "-fx-background-color: rgba(30, 45, 74, 0.8); " +
                     "-fx-text-fill: white; " +
                     "-fx-font-size: 20px; " +
@@ -77,20 +77,20 @@ public class VueSelection {
 
             pion.setStyle(stylePionNormal);
             pion.setContentDisplay(ContentDisplay.TOP);
-            pion.setGraphicTextGap(20); // Espace entre l'image et le nom
+            pion.setGraphicTextGap(20);
 
-            // Chargement de l'image (attention au dossier /pion/ !)
+
             try {
                 Image img = new Image(getClass().getResourceAsStream("/com/helha/saintseya/pion/" + fichierImage));
                 ImageView vueImage = new ImageView(img);
-                vueImage.setFitHeight(130); // Image un peu plus grande
+                vueImage.setFitHeight(130);
                 vueImage.setPreserveRatio(true);
                 pion.setGraphic(vueImage);
             } catch (Exception ex) {
                 System.out.println("⚠️ Image introuvable : /pion/" + fichierImage);
             }
 
-            // Animation de la carte (Survol)
+
             pion.setOnMouseEntered(e -> {
 
                 pion.setStyle(stylePionNormal.replace("rgba(30, 45, 74, 0.8)", "linear-gradient(to bottom, #FFDF00, #DAA520)").replace("white", "#1e2d4a"));
@@ -105,7 +105,7 @@ public class VueSelection {
                 pion.setEffect(haloDore);
             });
 
-            // Fin de l'animation
+
             pion.setOnMouseExited(e -> {
                 pion.setStyle(stylePionNormal);
                 pion.setScaleX(1.0);
@@ -113,7 +113,7 @@ public class VueSelection {
                 pion.setEffect(null);
             });
 
-            // Lancement du jeu !
+
             pion.setOnAction(e -> {
                 System.out.println("Vous avez sélectionné le Chevalier : " + nom);
                 app.changerVersPlateau(nom, fichierImage);
@@ -122,7 +122,7 @@ public class VueSelection {
             conteneurPions.getChildren().add(pion);
         }
 
-        // 5. LE BOUTON RETOUR (Même style que l'accueil)
+
         Button btnRetour = new Button("RETOUR");
         String styleRetour = "-fx-background-color: linear-gradient(to bottom, #8B6508, #5C4305); " +
                 "-fx-text-fill: white; " +
@@ -154,7 +154,7 @@ public class VueSelection {
 
         btnRetour.setOnAction(e -> app.changerVersAccueil());
 
-        // 6. ASSEMBLAGE
+
         mainBox.getChildren().addAll(titre, conteneurPions, btnRetour);
         root.getChildren().add(mainBox);
 

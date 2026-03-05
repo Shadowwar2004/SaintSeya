@@ -28,24 +28,22 @@ public class VuePlateau {
         StackPane rootContainer = new StackPane();
         rootContainer.setStyle(StyleConstantes.FOND);
 
-        // 1. FOND
         chargerFond(rootContainer);
 
-        // 2. PLATEAU (VUE)
         Pane plateauPane = new Pane();
         plateauPane.setPrefSize(1000, 1000);
         dessinerPlateau(plateauPane);
 
-        // 3. LE PION (Le personnage choisi centré !)
-        StackPane pionVisuel = new StackPane(); // Le StackPane centre ses enfants automatiquement !
-        pionVisuel.setPrefSize(40, 40); // La taille de la zone dédiée au pion
+
+        StackPane pionVisuel = new StackPane();
+        pionVisuel.setPrefSize(40, 40);
 
         try {
-            // On va chercher l'image dans le dossier "pion"
+
             Image imgPion = new Image(getClass().getResourceAsStream("/com/helha/saintseya/pion/" + fichierImage));
             ImageView vueImage = new ImageView(imgPion);
 
-            // On ajuste la taille de l'image pour qu'elle soit bien visible sur la case
+
             vueImage.setFitWidth(45);
             vueImage.setFitHeight(45);
             vueImage.setPreserveRatio(true);
@@ -55,21 +53,20 @@ public class VuePlateau {
             System.out.println("⚠️ Impossible de charger l'image du pion : " + fichierImage);
         }
 
-        // On centre la zone de 40x40 sur le clic de souris (donc -20 en X)
+
         pionVisuel.layoutXProperty().bind(modele.xProperty().subtract(20));
 
-        // On soustrait un peu plus en Y (-30 au lieu de -20) pour que
-        // le personnage ait l'air "debout" sur la case et non au milieu de son ventre
+
         pionVisuel.layoutYProperty().bind(modele.yProperty().subtract(30));
 
         plateauPane.getChildren().add(pionVisuel);
 
-        // Zoom automatique
+
         Group plateauGroup = new Group(plateauPane);
         plateauPane.scaleXProperty().bind(Bindings.min(rootContainer.widthProperty().divide(1000), rootContainer.heightProperty().divide(1000)));
         plateauPane.scaleYProperty().bind(plateauPane.scaleXProperty());
 
-        // BOUTON RETOUR AU MENU
+
         Button btnRetour = new Button("Retour (" + nomChevalier + ")");
         btnRetour.setStyle(StyleConstantes.BOUTON);
         btnRetour.setOnAction(e -> app.changerVersAccueil());
@@ -132,7 +129,7 @@ public class VuePlateau {
     }
 
     private void chargerFond(StackPane root) {
-        // Chemin mis à jour vers le dossier Plateau
+
         InputStream is = getClass().getResourceAsStream("/com/helha/saintseya/Plateau/Fond_plateau.png");
         if (is != null) {
             ImageView bg = new ImageView(new Image(is));
@@ -152,7 +149,7 @@ public class VuePlateau {
         Rectangle r = new Rectangle(70, 70); r.setArcWidth(15); r.setArcHeight(15);
         r.setStroke(Color.GOLD);
 
-        // Chemin mis à jour vers le dossier image
+
         InputStream is = getClass().getResourceAsStream("/com/helha/saintseya/image/" + img);
         if (is != null) {
             r.setFill(new ImagePattern(new Image(is, 70, 70, true, true)));
