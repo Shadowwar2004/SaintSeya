@@ -196,12 +196,12 @@ public class VuePlateau {
         dodecagone.setFill(Color.WHITESMOKE);
         dodecagone.setStroke(Color.GOLD);
         dodecagone.setStrokeWidth(3);
-        dodecagone.setRotate(15); // Aligne une face plate vers le haut/bas/côtés
+        dodecagone.setRotate(15);
 
-        // Effet de lueur (optionnel mais très Saint Seiya)
+        // Effet de lueur
         dodecagone.setEffect(new javafx.scene.effect.DropShadow(15, Color.GOLD));
 
-        // Texte (on peut un peu augmenter la taille vu que la case est plus grande)
+        // Texte
         Text t = new Text("SAINT SEIYA\nKNOWLEDGE\nQUEST\n\n[ START ]");
         t.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         t.setStyle("-fx-font-weight: bold; -fx-fill: #1e2d4a; -fx-font-size: 13px;");
