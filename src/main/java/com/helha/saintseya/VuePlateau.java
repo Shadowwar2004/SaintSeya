@@ -177,25 +177,46 @@ public class VuePlateau {
         p.setRotate(Math.toDegrees(angle) + 90);
         root.getChildren().add(p);
     }
-
     private StackPane creerCaseStart(double cx, double cy) {
         StackPane s = new StackPane();
 
-        // Le fond de la case avec coins arrondis et bordure dorée
-        Rectangle r = new Rectangle(130, 130, Color.WHITESMOKE);
-        r.setStroke(Color.GOLD);
-        r.setStrokeWidth(3); // Bordure un peu plus visible
-        r.setArcWidth(15);   // Coins arrondis comme sur ta capture !
-        r.setArcHeight(15);
+        // RAYON AUGMENTÉ : Passage de 75 à 85 pixels (+10 px)
+        double rayon = 85;
 
-        // Le texte exact de ta capture d'écran
+        // Création du dodécagone (12 côtés)
+        Polygon dodecagone = new Polygon();
+        for (int i = 0; i < 12; i++) {
+            double angle = 2 * Math.PI * i / 12;
+            double x = rayon * Math.cos(angle);
+            double y = rayon * Math.sin(angle);
+            dodecagone.getPoints().addAll(x, y);
+        }
+
+        // Style et Rotation pour aligner les faces avec les chemins
+        dodecagone.setFill(Color.WHITESMOKE);
+        dodecagone.setStroke(Color.GOLD);
+        dodecagone.setStrokeWidth(3);
+        dodecagone.setRotate(15); // Aligne une face plate vers le haut/bas/côtés
+
+        // Effet de lueur (optionnel mais très Saint Seiya)
+        dodecagone.setEffect(new javafx.scene.effect.DropShadow(15, Color.GOLD));
+
+        // Texte (on peut un peu augmenter la taille vu que la case est plus grande)
         Text t = new Text("SAINT SEIYA\nKNOWLEDGE\nQUEST\n\n[ START ]");
-        t.setTextAlignment(javafx.scene.text.TextAlignment.CENTER); // On centre le texte
-        t.setStyle("-fx-font-weight: bold; -fx-fill: #1e2d4a;"); // En gras avec une couleur bleu foncé
+        t.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        t.setStyle("-fx-font-weight: bold; -fx-fill: #1e2d4a; -fx-font-size: 13px;");
 
-        s.getChildren().addAll(r, t);
-        s.setLayoutX(cx - 65);
-        s.setLayoutY(cy - 65);
+        // Assemblage
+        s.getChildren().addAll(dodecagone, t);
+
+        // Positionnement centré sur cx, cy
+        s.setLayoutX(cx);
+        s.setLayoutY(cy);
+
+        // On compense le layout pour que le centre exact soit sur cx, cy
+        s.setTranslateX(-rayon);
+        s.setTranslateY(-rayon);
+
         s.setOnMouseClicked(e -> controleur.demanderDeplacement(cx, cy));
 
         return s;
